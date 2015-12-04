@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import java.io.Serializable;
 import java.util.List;
 
 import butterknife.Bind;
@@ -19,9 +20,13 @@ import pl.elabo.flingchallenge.ui.adapter.FeedRecyclerViewAdapter;
 
 public class FeedActivity extends BaseActivity implements FeedView {
 
+	public static final String LAYOUT_MANEGER_STATE_KEY = "layout_manager_state_key";
+	public static final String ITEMS_STATE_KEY = "items_state_key";
+
 	@Bind(R.id.feed_recycler_view)
 	RecyclerView mFeedRecyclerView;
 
+	private RecyclerView.LayoutManager mLayoutManager;
 	private FeedRecyclerViewAdapter mFeedRecyclerViewAdapter;
 
 	private FeedPresenter mFeedPresenter;
@@ -39,7 +44,12 @@ public class FeedActivity extends BaseActivity implements FeedView {
 			mFeedPresenter = new FeedPresenterImpl(this);
 		}
 
-		mFeedPresenter.onCreate();
+		if (savedInstanceState == null) {
+			mFeedPresenter.onCreate();
+		} else {
+			mFeedPresenter.onCreate((List<Item>) savedInstanceState.getSerializable(ITEMS_STATE_KEY));
+			mLayoutManager.onRestoreInstanceState(savedInstanceState.getParcelable(LAYOUT_MANEGER_STATE_KEY));
+		}
 	}
 
 	@Override
@@ -55,9 +65,16 @@ public class FeedActivity extends BaseActivity implements FeedView {
 	}
 
 	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putParcelable(LAYOUT_MANEGER_STATE_KEY, mLayoutManager.onSaveInstanceState());
+		outState.putSerializable(ITEMS_STATE_KEY, (Serializable) mFeedRecyclerViewAdapter.getItems());
+		super.onSaveInstanceState(outState);
+	}
+
+	@Override
 	public void initList() {
-		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-		mFeedRecyclerView.setLayoutManager(layoutManager);
+		mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+		mFeedRecyclerView.setLayoutManager(mLayoutManager);
 		mFeedRecyclerViewAdapter = new FeedRecyclerViewAdapter();
 		mFeedRecyclerView.setAdapter(mFeedRecyclerViewAdapter);
 	}

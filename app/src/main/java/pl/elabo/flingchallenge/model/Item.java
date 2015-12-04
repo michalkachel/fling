@@ -2,9 +2,11 @@ package pl.elabo.flingchallenge.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 import pl.elabo.flingchallenge.model.base.BaseModel;
 
-public class Item extends BaseModel {
+public class Item extends BaseModel implements Serializable {
 
 	@SerializedName("ImageID")
 	protected long mImageId;

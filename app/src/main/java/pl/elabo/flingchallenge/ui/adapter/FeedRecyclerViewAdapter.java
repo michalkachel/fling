@@ -40,7 +40,6 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
 		Glide.with(holder.mImage.getContext()).load(UrlUtil.photoUrl(item.getImageId())).sizeMultiplier(0.5f).crossFade().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(false).into(holder.mImage);
 
 		holder.itemView.setTag(item);
-
 	}
 
 	@Override
@@ -52,6 +51,10 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
 		mItems.clear();
 		mItems.addAll(items);
 		notifyDataSetChanged();
+	}
+
+	public List<Item> getItems() {
+		return mItems;
 	}
 
 	protected static class FeedViewHolder extends RecyclerView.ViewHolder {

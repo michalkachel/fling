@@ -33,6 +33,12 @@ public class FeedPresenterImpl extends BasePresenter<FeedView> implements FeedPr
 	}
 
 	@Override
+	public void onCreate(List<Item> items) {
+		getView().initList();
+		getView().showItems(items);
+	}
+
+	@Override
 	public void onResume() {
 	}
 

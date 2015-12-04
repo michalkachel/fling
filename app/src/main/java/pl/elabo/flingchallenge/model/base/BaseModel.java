@@ -2,11 +2,13 @@ package pl.elabo.flingchallenge.model.base;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 import pl.elabo.flingchallenge.repository.DatabaseRepository;
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
-public abstract class BaseModel {
+public abstract class BaseModel implements Serializable {
 
 	@SerializedName("ID")
 	protected Long _id;
