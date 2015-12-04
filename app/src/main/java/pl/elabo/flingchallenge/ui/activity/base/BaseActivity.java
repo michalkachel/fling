@@ -10,6 +10,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.elabo.flingchallenge.R;
 import pl.elabo.flingchallenge.mvp.view.base.BaseView;
+import pl.elabo.flingchallenge.util.NotificationManager;
 
 public abstract class BaseActivity extends AppCompatActivity implements BaseView {
 
@@ -33,6 +34,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
 	@Override
 	public void showError(Throwable throwable) {
-		//// TODO: 04.12.15 implement notification manager
+		NotificationManager.showMessage(this, getString(R.string.message_error_occured_colon) + throwable.getMessage(), true);
 	}
 }
