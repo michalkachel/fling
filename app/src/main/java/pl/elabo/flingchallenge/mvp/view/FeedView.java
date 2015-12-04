@@ -11,4 +11,6 @@ public interface FeedView extends BaseView {
 
 	void showItems(List<Item> items);
 
+	boolean isInternetAvailable();
+
 }

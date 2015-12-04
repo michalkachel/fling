@@ -1,5 +1,7 @@
 package pl.elabo.flingchallenge.ui.activity;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -63,5 +65,12 @@ public class FeedActivity extends BaseActivity implements FeedView {
 	@Override
 	public void showItems(List<Item> items) {
 		mFeedRecyclerViewAdapter.setFeedItems(items);
+	}
+
+	@Override
+	public boolean isInternetAvailable() {
+		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+		return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 	}
 }

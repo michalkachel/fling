@@ -2,10 +2,9 @@ package pl.elabo.flingchallenge.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Item {
+import pl.elabo.flingchallenge.model.base.BaseModel;
 
-	@SerializedName("ID")
-	protected long mId;
+public class Item extends BaseModel {
 
 	@SerializedName("ImageID")
 	protected long mImageId;

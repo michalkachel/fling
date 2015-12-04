@@ -23,6 +23,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:background="@color/black_semi_transparent"
+		android:ellipsize="end"
 		android:maxLines="1"
 		android:padding="@dimen/list_item_text_padding"
 		android:singleLine="true"
