@@ -24,10 +24,7 @@ public class FeedPresenterImpl extends BasePresenter<FeedView> implements FeedPr
 	@Override
 	public void onCreate() {
 		getView().initList();
-	}
 
-	@Override
-	public void onResume() {
 		if (getView().isInternetAvailable()) {
 			requestFeed();
 		} else {
@@ -36,8 +33,11 @@ public class FeedPresenterImpl extends BasePresenter<FeedView> implements FeedPr
 	}
 
 	@Override
+	public void onResume() {
+	}
+
+	@Override
 	public void onPause() {
-		cancelCalls();
 	}
 
 	private void loadFeedFromDatabase() {
@@ -46,6 +46,7 @@ public class FeedPresenterImpl extends BasePresenter<FeedView> implements FeedPr
 	}
 
 	private void requestFeed() {
+		getView().showProgress();
 		cancelCalls();
 		mFeedCall = RestClient.getFeedApi().feed();
 		mFeedCall.enqueue(new Callback<List<Item>>() {
@@ -54,19 +55,25 @@ public class FeedPresenterImpl extends BasePresenter<FeedView> implements FeedPr
 				final List<Item> items = response.body();
 				if (response.isSuccess() && items != null) {
 					saveItems(items);
-					getView().showItems(items);
+					if (getView() != null) {
+						getView().showItems(items);
+					}
 				} else {
 					loadFeedFromDatabase();
 				}
+				getView().hideProgress();
 			}
 
 			@Override
 			public void onFailure(Throwable t) {
 				t.printStackTrace();
-				if (isCausedByCancel(t)) {
-					getView().showError(t);
+				if (!isCausedByCancel(t)) {
+					if (getView() != null) {
+						getView().showError(t);
+					}
 					loadFeedFromDatabase();
 				}
+				getView().hideProgress();
 			}
 		});
 	}

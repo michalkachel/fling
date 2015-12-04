@@ -19,6 +19,7 @@ public class FlingChallengeApplication extends Application {
 		}
 
 		initDatabaseAndRepository();
+
 	}
 
 	private void initDatabaseAndRepository() {
@@ -26,5 +27,7 @@ public class FlingChallengeApplication extends Application {
 		SQLiteDatabase database = databaseHelper.getWritableDatabase();
 		DatabaseRepository.init(database);
 	}
+
+
 
 }

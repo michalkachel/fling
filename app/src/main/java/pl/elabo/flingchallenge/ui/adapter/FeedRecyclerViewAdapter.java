@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
 		Item item = mItems.get(position);
 		holder.mTitle.setText(item.getTitle());
 		Glide.clear(holder.mImage);
-		Glide.with(holder.mImage.getContext()).load(UrlUtil.photoUrl(item.getImageId())).into(holder.mImage);
+		Glide.with(holder.mImage.getContext()).load(UrlUtil.photoUrl(item.getImageId())).sizeMultiplier(0.5f).crossFade().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(false).into(holder.mImage);
 
 		holder.itemView.setTag(item);
 

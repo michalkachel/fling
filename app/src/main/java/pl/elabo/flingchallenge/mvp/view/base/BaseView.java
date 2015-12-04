@@ -4,4 +4,8 @@ public interface BaseView {
 
 	void showError(Throwable throwable);
 
+	void showProgress();
+
+	void hideProgress();
+
 }
